@@ -17,6 +17,10 @@ const studentSchema=new mongoose.Schema({
         type:String,
         require:true
     },
+    previousmentor:{
+        type:String,
+        require:true
+    }
    
 })
 const student = mongoose.model('student', studentSchema)

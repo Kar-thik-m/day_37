@@ -126,7 +126,7 @@ studentmentorRouter.get('/previous-mentor/:studentId', async (req, res) => {
       return res.status(404).json({ error: 'No previous mentor found for this student' });
     }
 
-    res.json({ previousMentorId }); 
+    res.json({ previousMentor }); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
