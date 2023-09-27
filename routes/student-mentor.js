@@ -98,7 +98,7 @@ studentmentorRouter.get('/all-studentsmento/:mentorId', async (req, res) => {
   try {
     const { mentorId } = req.params;
 
-    const students = await mentormodel.findOne({ mentorid: mentorId });
+    const students = await mentormodel.findOne({ mentorId: mentorId });
 
     res.json(students);
   } catch (error) {
