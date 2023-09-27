@@ -96,7 +96,7 @@ studentmentorRouter.put('/assign-mentor/:studentId', async (req, res) => {
 
 
 
-studentmentorRouter.get('/all-studentsmento/:mentorId', async (req, res) => {
+studentmentorRouter.get('/all-studentsmentor/:mentorId', async (req, res) => {
   try {
     const { mentorId } = req.params;
 
