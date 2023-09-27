@@ -58,8 +58,10 @@ studentmentorRouter.put("/student-mentor/:mentorId", async (req, res) => {
           const { mentorId } = req.params;
           const { studentId } = req.body;
 
-          await mentormodel.updateMany({ mentorId: mentorId }, { $push: { studentids: studentId } });
-
+       const add=   await mentormodel.updateMany({ mentorId: mentorId }, { $push: { studentids: studentId } });
+         if(add.studentId===studentId){
+          return res.send({err:"allready add a student"})
+         }
           res.send({ msg: "add successful" });
      } catch (error) {
           res.status(500).send({ msg: "not add error" });
@@ -98,7 +100,7 @@ studentmentorRouter.get('/all-studentsmento/:mentorId', async (req, res) => {
   try {
     const { mentorId } = req.params;
 
-    const students = await mentormodel.findOne({ mentorId: mentorId });
+    const students = await mentormodel.findOne({ mentorId: mentorId },{name:1,studentids:1});
 
     res.json(students);
   } catch (error) {
@@ -113,20 +115,15 @@ studentmentorRouter.get('/previous-mentor/:studentId', async (req, res) => {
   try {
     const { studentId } = req.params;
 
-    const student = await mentormodel.findById(studentId);
-
-    if (!student) {
-      return res.status(404).json({ error: 'Student not found' });
-    }
-
     
-    const previousMentor = student. previousmentor;
+    
+    const previousMentor=await studentmodel.findOne({studentId:studentId},{studentname:1,previousmentor:1,_id:0});
 
-    if (!previousMentor) {
-      return res.status(404).json({ error: 'No previous mentor found for this student' });
+    if(!previousMentor){
+     return res.send({msg:"not found"});
     }
 
-    res.json({ previousMentor }); 
+    res.json( previousMentor ); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
